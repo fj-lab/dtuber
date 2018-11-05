@@ -93,10 +93,13 @@ def main():
         image_bgr = cv2.cvtColor(np.squeeze(generated_image), cv2.COLOR_RGB2BGR)
         image_normal = np.concatenate([resize(frame_resize), image_bgr], axis=1)
         image_landmark = np.concatenate([resize(black_image), image_bgr], axis=1)
+        image_all = np.concatenate([resize(frame_resize), resize(black_image), image_bgr], axis=1)
 
         if args.display_landmark == 0:
+            cv2.imshow('frame', image_all)
+        elif args.display_landmark == 1:
             cv2.imshow('frame', image_normal)
-        else:
+        elif args.display_landmark == 2:
             cv2.imshow('frame', image_landmark)
 
         fps.update()
@@ -116,7 +119,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-src', '--source', dest='video_source', type=int,
                         default=0, help='Device index of the camera.')
-    parser.add_argument('--show', dest='display_landmark', type=int, default=0, choices=[0, 1],
+    parser.add_argument('--show', dest='display_landmark', type=int, default=0, choices=[0, 1, 2],
                         help='0 shows the normal input and 1 the facial landmark.')
     parser.add_argument('--landmark-model', dest='face_landmark_shape_file', type=str, help='Face landmark model file.')
     parser.add_argument('--tf-model', dest='frozen_model_file', type=str, help='Frozen TensorFlow model file.')
