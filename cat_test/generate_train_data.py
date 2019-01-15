@@ -78,21 +78,21 @@ def main():
 
     fps.stop()
     print('[INFO] elapsed time (total): {:.2f}'.format(fps.elapsed()))
-    print('[INFO] approx. FPS: {:.2f}'.format(fps.fps()))
+    #print('[INFO] approx. FPS: {:.2f}'.format(fps.fps()))
 
     cap.release()
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('--file', dest='filename', type=str, help='Name of the video file.')
-    #parser.add_argument('--num', dest='number', type=int, help='Number of train data to be created.')
-    #parser.add_argument('--landmark-model', dest='face_landmark_shape_file', type=str, help='Face landmark model file.')
-    #args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', dest='filename', type=str, help='Name of the video file.')
+    parser.add_argument('--num', dest='number', type=int, help='Number of train data to be created.')
+    parser.add_argument('--landmark-model', dest='face_landmark_shape_file', type=str, help='Face landmark model file.')
+    args = parser.parse_args()
 
     # Create the face predictor and landmark predictor
-    #detector = dlib.get_frontal_face_detector()
-    #predictor = dlib.shape_predictor(args.face_landmark_shape_file)
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor(args.face_landmark_shape_file)
 
     main()
