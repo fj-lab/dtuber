@@ -1,3 +1,5 @@
+forked  marando/pycatfd
+
 pycatfd 🐈
 ==========
 _Cat facial detection and landmark recognition with Python_
@@ -44,3 +46,6 @@ If you would like to do this manually, you can run the following:
     ```shell
     docker run -it --rm -v "$PWD":/app pycatfd /bin/bash
     ```
+    
+## Note
+skimage.io segmentation fault
