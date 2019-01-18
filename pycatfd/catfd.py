@@ -10,7 +10,7 @@ from lib.Detector import *
 from skimage import io
 import sys
 #sys.path.append('./lib')
-
+import pandas as pd
 
 def main():
     formatter = lambda prog: argparse.HelpFormatter(prog,
@@ -134,7 +134,7 @@ def detect(input_image, output_path, use_json, annotate_faces,
         if use_json:
             json.append(get_face_json(face, shape))
         else:
-            print_face_info(i, face, shape)
+            print_face_info(i, face, shape, input_image)
 
     if d.result.face_count > 0:
         if annotate_faces or annotate_landmarks:
@@ -142,7 +142,7 @@ def detect(input_image, output_path, use_json, annotate_faces,
                                        input_image,
                                        '_annotated',
                                        'jpg')
-
+            
             cv2.imwrite(filename, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 
     if use_json:
@@ -157,7 +157,8 @@ def get_output_file(output_path, input_image, extra, ext):
     return os.path.join(output_path, basename + str(extra) + '.' + ext)
 
 
-def print_face_info(i, face, shape):
+def print_face_info(i, face, shape, input_image):
+
     print ('Face #{}: ({}, {}), ({}, {})'.format(
         i,
         face.top(),
@@ -165,14 +166,32 @@ def print_face_info(i, face, shape):
         face.right(),
         face.bottom()
     ))
-
+     
+    tmp = []
     for landmark in CatFaceLandmark.all():
         print ('   {}: ({}, {})'.format(
             landmark['name'],
             shape.part(landmark['value']).x,
             shape.part(landmark['value']).y
         ))
+        tmp.append(str(shape.part(landmark['value']).x) + ',' + str(shape.part(landmark['value']).y))
+   
 
+    # cast to string
+    top = str(face.top())
+    left = str(face.left())
+    right = str(face.right())
+    bottom = str(face.bottom())
+
+    # create dataframe
+    face_df = pd.DataFrame([[top+','+left, right+','+bottom]], columns=['A', 'B'])
+    land_df = pd.DataFrame(tmp, columns=['A'])
+    df = pd.concat([face_df, land_df], sort=True)
+
+    # save to csv
+    path, ext = os.path.splitext(os.path.basename(input_image))
+    os.makedirs('./csv', exist_ok=True)
+    df.to_csv('./csv/{}.csv'.format(path), header=False, index=False)
 
 def get_face_json(face, shape):
     landmarks = {}
