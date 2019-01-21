@@ -190,7 +190,7 @@ def print_face_info(i, face, shape, input_image):
 
     # save to csv
     path, ext = os.path.splitext(os.path.basename(input_image))
-    os.makedirs('./csv', exist_ok=True)
+    #os.makedirs('./csv') #os.makedirs('./csv', exist_ok=True)
     df.to_csv('./csv/{}.csv'.format(path), header=False, index=False)
 
 def get_face_json(face, shape):

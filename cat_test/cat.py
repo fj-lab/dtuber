@@ -22,40 +22,43 @@ def main():
     color = (255,255,255)
     thickness = 3
     count = 0
-    b = []
-    b.append([])
-    b.append([])
-    b.append([])
-    c = []
-    c.append([])
-    d = []
-    d.append([])
-    d.append([])
-    e = []
-    e.append([])
-    e.append([])
-    f = []
-    f.append([])
-    g = []
-    g.append([])
-    h = []
-    h.append([])
-    h.append([])
-    j = []
-    j.append([])
-    j.append([])
-    k = []
-    k.append([])
-    k.append([])
-    k.append([])
-    m = []
-    m.append([])
-    m.append([])
-    m.append([])
-    ago = []
-    ago.append([])
 
     for frame in range(1,FRAME_NUM+1):
+
+
+	    b = []
+    	b.append([])
+    	b.append([])
+   	b.append([])
+   	c = []
+    	c.append([])
+    	d = []
+    	d.append([])
+    	d.append([])
+    	e = []
+    	e.append([])
+    	e.append([])
+    	f = []
+    	f.append([])
+    	g = []
+    	g.append([])
+    	h = []
+    	h.append([])
+    	h.append([])
+    	j = []
+    	j.append([])
+    	j.append([])
+    	k = []
+    	k.append([])
+    	k.append([])
+    	k.append([])
+    	m = []
+   	m.append([])
+    	m.append([])
+    	m.append([])
+    	ago = []
+    	ago.append([])
+
         img = cv2.imread(str(frame) + '.jpg')
         df = pd.read_csv(str(frame) + '.csv',header=None)
         black_image = np.zeros(img.shape,np.uint8)
@@ -147,3 +150,4 @@ def main():
 if __name__ == '__main__':
 
     main()
+
