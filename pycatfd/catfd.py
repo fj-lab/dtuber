@@ -196,18 +196,11 @@ def print_face_info(i, face, shape, input_image, img, count):
     land_df = pd.DataFrame(tmp, columns=['A'])
     df = pd.concat([face_df, land_df], sort=True)
 
-    # save to csv
-<<<<<<< HEAD
+    # save
     #path, ext = os.path.splitext(os.path.basename(input_image))
     os.makedirs('./csv', exist_ok=True)
     df.to_csv('./csv/{}.csv'.format(count), header=False, index=False)
     cv2.imwrite('./csv/{}.jpg'.format(count), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
-    print(count)
-=======
-    path, ext = os.path.splitext(os.path.basename(input_image))
-    #os.makedirs('./csv') #os.makedirs('./csv', exist_ok=True)
-    df.to_csv('./csv/{}.csv'.format(path), header=False, index=False)
->>>>>>> f0e689a74f5906088e4b42be9ba06093712eca5e
 
 def get_face_json(face, shape):
     landmarks = {}
