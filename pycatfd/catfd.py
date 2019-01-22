@@ -141,8 +141,6 @@ def detect(input_image, output_path, use_json, annotate_faces,
             json.append(get_face_json(face, shape))
         else:
             print_face_info(i, face, shape, input_image, img, count)
-            print(count)
-        
 
     if d.result.face_count > 0:
         if annotate_faces or annotate_landmarks:
@@ -166,7 +164,8 @@ def get_output_file(output_path, input_image, extra, ext):
 
 
 def print_face_info(i, face, shape, input_image, img, count):
-
+    
+    print(count)
     print ('Face #{}: ({}, {}), ({}, {})'.format(
         i,
         face.top(),
