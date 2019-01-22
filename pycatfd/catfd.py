@@ -81,7 +81,10 @@ def main():
                args['save_chip'])
 
     if args['input_folder']:
+        
+        count = 0
         for f in glob.glob(os.path.join(args['input_folder'], '*.jp*g')):
+            
             detect(f,
                    args['output_path'],
                    args['json'],
@@ -89,11 +92,14 @@ def main():
                    args['annotate_landmarks'],
                    args['face_color'],
                    args['landmark_color'],
-                   args['save_chip'])
+                   args['save_chip'],
+                   count)
 
+            count += 1
 
 def detect(input_image, output_path, use_json, annotate_faces,
-           annotate_landmarks, face_color, landmark_color, save_chip):
+           annotate_landmarks, face_color, landmark_color, save_chip, count):
+    
     img = io.imread(input_image)
 
     d = Detector(input_image)
@@ -107,7 +113,7 @@ def detect(input_image, output_path, use_json, annotate_faces,
 
     if annotate_faces or annotate_landmarks:
         w = img.shape[1]
-
+    
     for i, face in enumerate(d.result.faces):
         shape = d.predictor(img, face)
 
@@ -134,7 +140,9 @@ def detect(input_image, output_path, use_json, annotate_faces,
         if use_json:
             json.append(get_face_json(face, shape))
         else:
-            print_face_info(i, face, shape, input_image)
+            print_face_info(i, face, shape, input_image, img, count)
+            print(count)
+        
 
     if d.result.face_count > 0:
         if annotate_faces or annotate_landmarks:
@@ -157,7 +165,7 @@ def get_output_file(output_path, input_image, extra, ext):
     return os.path.join(output_path, basename + str(extra) + '.' + ext)
 
 
-def print_face_info(i, face, shape, input_image):
+def print_face_info(i, face, shape, input_image, img, count):
 
     print ('Face #{}: ({}, {}), ({}, {})'.format(
         i,
@@ -189,9 +197,11 @@ def print_face_info(i, face, shape, input_image):
     df = pd.concat([face_df, land_df], sort=True)
 
     # save to csv
-    path, ext = os.path.splitext(os.path.basename(input_image))
+    #path, ext = os.path.splitext(os.path.basename(input_image))
     os.makedirs('./csv', exist_ok=True)
-    df.to_csv('./csv/{}.csv'.format(path), header=False, index=False)
+    df.to_csv('./csv/{}.csv'.format(count), header=False, index=False)
+    cv2.imwrite('./csv/{}.jpg'.format(count), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+    print(count)
 
 def get_face_json(face, shape):
     landmarks = {}
