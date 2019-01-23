@@ -23,7 +23,7 @@ def main():
     thickness = 3
     count = 0
 
-    for frame in range(1,FRAME_NUM+1):
+    for frame in range(0,FRAME_NUM+1):
 
         check_path = 'neko/' + str(frame) + '.jpg'
         check = os.path.exists(check_path)
@@ -142,8 +142,9 @@ def main():
             cv2.polylines(black_image,[Right_to_Chin],False,color,thickness)
             cv2.circle(black_image,tuple([flatten for inner in g for flatten in inner]),20,color,thickness)
         
-
-            cv2.imwrite(str(frame) + ".png",black_image)
+        
+            cv2.imwrite('./landmarks/{}.jpg'.format(str(frame)), black_image)
+            #cv2.imwrite(str(frame) + ".png",black_image)
             #cv2.rectangle(black_image,(69,539),(967,497),color,thickness)
         
     #cv2.imshow("asdf",black_image)
