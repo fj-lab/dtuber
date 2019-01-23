@@ -17,35 +17,13 @@ _Cat facial detection and landmark recognition with Python_
 * requests
 * scikit-image 
 
++ Note: skimage.io segmentation fault
 
-## Usage
-Use `catfd.py` to detect cat faces and facial landmarks in individual images or 
-an entire folder. The repository comes pre-trained, but can be re-trained using 
-the `train.py` tool.
+## Crop cat (experimental)
+yolo.py can crop cats from original images.
+If you want use, see [keras-yolo3](https://github.com/qqwweee/keras-yolo3).
 
+1. Download YOLOv3 weights.
+2. Convert YOLO model to keras model.
+3. run yolo.py
 
-## Docker Container
-A `Dockerfile` is provided to avoid having to install all dependencies manually, 
-which can be quite tedious. First make sure that you have Docker installed on 
-your system, and then to use the image, build it using the `build.sh` script, 
-and then run it using the `run.sh` script from within the repository directory. 
-
-If you would like to do this manually, you can run the following: 
-
-1. Clone and enter the repository:
-    ```shell
-    git clone git@github.com:marando/pycatfd.git
-    cd pycatfd
-    ```
-
-2. Build the image:
-    ```shell
-    docker build -t pycatfd .
-    ```
-3. Then issue this command to run it:
-    ```shell
-    docker run -it --rm -v "$PWD":/app pycatfd /bin/bash
-    ```
-    
-## Note
-skimage.io segmentation fault
